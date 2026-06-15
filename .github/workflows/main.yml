@@ -1,0 +1,25 @@
+name: RSS Scout
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # setiap 6 jam
+  workflow_dispatch:         # bisa dijalankan manual
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install feedparser beautifulsoup4
+      - name: Run script
+        run: python script_research.py
+      - name: Upload JSON as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-data
+          path: news.json

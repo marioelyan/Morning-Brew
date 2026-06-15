@@ -2,31 +2,37 @@ name: RSS Scout
 
 on:
   schedule:
-    - cron: '0 12 * * *'   
-  workflow_dispatch:         # bisa dijalankan manual
+    - cron: '0 12 * * *'   # 12:00 UTC = 19:00 WIB
+  workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
           pip install feedparser beautifulsoup4
+
       - name: Run script
         run: python script_research.py
-      - name: Buat file JSON
-        run: |
-          zip news.zip news.json
+
       - name: Kirim file JSON ke Telegram
         run: |
+          if [ ! -f news.json ]; then
+            echo "news.json tidak ditemukan!"
+            exit 1
+          fi
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
-          -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-          -F document="@news.json" \
-          -F caption="✅ Malam bos! Izin mengirim file RSS Scout pada $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F document="@news.json" \
+            -F caption="✅ RSS Scout selesai pada $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+
       - name: Upload JSON as artifact
         uses: actions/upload-artifact@v4
         with:

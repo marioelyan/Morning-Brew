@@ -18,15 +18,15 @@ jobs:
           pip install feedparser beautifulsoup4
       - name: Run script
         run: python script_research.py
-      - name: Buat file ZIP
+      - name: Buat file JSON
         run: |
           zip news.zip news.json
-      - name: Kirim file ZIP ke Telegram
+      - name: Kirim file JSON ke Telegram
         run: |
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
           -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-          -F document="@news.zip" \
-          -F caption="✅ RSS Scout selesai pada $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          -F document="@news.json" \
+          -F caption="✅ Malam bos! Izin mengirim file RSS Scout pada $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
       - name: Upload JSON as artifact
         uses: actions/upload-artifact@v4
         with:

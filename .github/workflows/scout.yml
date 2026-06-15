@@ -2,7 +2,7 @@ name: RSS Scout
 
 on:
   schedule:
-    - cron: '0 */6 * * *'   # setiap 6 jam
+    - cron: '0 12 * * *'   # setiap 6 jam
   workflow_dispatch:         # bisa dijalankan manual
 
 jobs:

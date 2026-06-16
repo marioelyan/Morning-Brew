@@ -33,12 +33,20 @@ def curate_top5(all_articles):
     prompt = """Anda adalah kurator berita bisnis dan teknologi startup yang sangat berpengalaman. 
 Tugas: pilih 5 berita yang paling penting, berdampak, dan ramai diperbincangkan, tetapi dengan VARIASI yang tinggi.
 
-📌 ATURAN VARIASI (WAJIB):
-1. **Minimal harus mencakup 4 sektor berbeda** dari daftar sektor: AI, Space, Fintech/IPO, Regulasi, Startup/VC, Sosial/Media, Hardware/Deep Tech, Ekonomi/Makro.
+ATURAN VARIASI (WAJIB):
+1. **Minimal harus mencakup 4 sektor berbeda** dari daftar sektor dibawah ini
 2. **Maksimal 2 berita dari sektor yang sama** (misal: jangan 3 tentang AI atau 3 tentang SpaceX).
 3. **Maksimal 1 berita dari sumber yang sama** (jangan pilih 2 dari TechCrunch, 2 dari Forbes, dll.).
 4. **Prioritaskan berita yang dipublikasikan dalam 24 jam terakhir** (lihat field "published").
 5. **Hindari mengulang topik yang sudah muncul di 2 hari terakhir** (gunakan kebijaksanaan Anda).
+
+Daftar sektor:
+- **Pendanaan & IPO** (funding rounds, IPO, valuasi, akuisisi)
+- **Regulasi & Kebijakan** (kebijakan pemerintah, pajak, larangan)
+- **Startup & Inovasi** (produk baru, teknologi disruptif, founder)
+- **Pasar Modal & Ekonomi Makro** (saham, inflasi, suku bunga, pasar global)
+- **Korporasi & M&A** (akuisisi besar, merger, ekspansi perusahaan)
+- **Teknologi AI & Digital** (AI, cloud, cybersecurity, digital transformation)
 
 Skor (1-5) tetap digunakan, tetapi pertimbangkan variasi sebagai faktor penambah nilai.
 

@@ -16,50 +16,56 @@ def save_top5(articles, filename="top5.json"):
         json.dump(articles, f, ensure_ascii=False, indent=2)
 
 def curate_top5(all_articles):
-    # Tanpa batasan: semua artikel dan summary penuh
+    # Siapkan daftar artikel untuk prompt (tanpa batasan)
     articles_for_prompt = []
     for idx, art in enumerate(all_articles, 1):
+        summary_clean = art.get("summary", "").replace('\n', ' ').replace('\r', '')
         articles_for_prompt.append({
             "id": idx,
             "title": art["title"],
-            "summary": art.get("summary", "")  # tanpa potongan
+            "summary": summary_clean[:500],  # batasi agar token tidak overload
+            "link": art.get("link", ""),
+            "published": art.get("published", "")
         })
     
-    prompt = """Anda adalah kurator berita bisnis dan teknologi startup. 
-Berikut adalah daftar berita dari berbagai sumber (TechCrunch, Fortune, Entrepreneur, Forbes, Crunchbase).
+    prompt = """Anda adalah kurator berita bisnis dan teknologi startup yang sangat berpengalaman. 
+Tugas: pilih 5 berita yang paling penting, berdampak, dan ramai diperbincangkan dari daftar di bawah ini.
 
-Tugas: pilih 5 berita yang paling penting, relevan, dan berdampak untuk eksekutif dan investor startup.
+Berikan penilaian (score) untuk setiap berita yang dipilih dengan skala 1-5, di mana:
+- 5 = sangat penting, berdampak besar, dan sangat ramai (misal: IPO besar, akuisisi raksasa, perubahan regulasi global)
+- 4 = penting, berdampak signifikan, cukup ramai (misal: pendanaan besar, peluncuran produk disruptif)
+- 3 = cukup penting, berdampak sedang, ramai di kalangan tertentu
+- 2 = kurang penting, dampak terbatas, tidak terlalu ramai
+- 1 = tidak penting (tidak akan dipilih)
 
-Kriteria:
-- Inovasi teknologi disruptif
-- Pendanaan atau valuasi startup
-- Akuisisi atau IPO
-- Perubahan regulasi signifikan
-- Tren pasar yang muncul
+Kriteria penilaian:
+- Dampak terhadap pasar modal, startup, atau industri teknologi secara luas.
+- Jumlah nilai transaksi (pendanaan, akuisisi, IPO) jika ada.
+- Relevansi untuk eksekutif, investor, dan pelaku startup di Asia Tenggara (prioritaskan yang relevan).
+- Kebaruan dan potensi tren jangka panjang.
+- Seberapa banyak dibicarakan di media dan komunitas.
 
-Berikan output dalam format JSON **tanpa komentar tambahan**, seperti:
-[
-  {
-    "id": 1,
-    "title": "...",
-    "reason": "alasan singkat",
-    "original_index": (nomor urut asli dari daftar di bawah)
-  },
-  ...
-]
+Output: Berikan dalam format JSON **tanpa komentar tambahan**, berupa array of objects dengan field:
+{
+  "title": (string, judul asli),
+  "summary": (string, ringkasan asli),
+  "link": (string, URL asli),
+  "published": (string, tanggal publikasi asli),
+  "score": (integer, 1-5),
+  "reason": (string singkat, alasan mengapa berita ini penting dan skor tersebut)
+}
 
-Berikut daftar berita (format: id | title | summary):
+Pilih 5 berita. Jika ada berita dengan skor di bawah 3, pertimbangkan untuk tidak memasukkannya, tetapi tetap usahakan 5 berita terbaik.
+
+Berikut daftar berita (format: ID | Title | Summary):
 """
     for item in articles_for_prompt:
-        # Ganti newline agar tidak merusak format
-        summary_clean = item["summary"].replace('\n', ' ').replace('\r', '')
-        prompt += f"\n{item['id']} | {item['title']} | {summary_clean}"
+        prompt += f"\n{item['id']} | {item['title']} | {item['summary']}..."
 
-    # Panggil DeepSeek
     response = client.chat.completions.create(
         model="deepseek-chat",
         messages=[
-            {"role": "system", "content": "Anda adalah kurator berita yang sangat selektif."},
+            {"role": "system", "content": "Anda adalah kurator berita yang sangat selektif dan objektif. Berikan output selalu dalam format JSON yang valid."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.3,
@@ -68,21 +74,50 @@ Berikut daftar berita (format: id | title | summary):
 
     result_text = response.choices[0].message.content
     try:
-        selected = json.loads(result_text)
+        data = json.loads(result_text)
+        if isinstance(data, dict):
+            # Coba cari array di dalam dict
+            if "berita" in data:
+                selected = data["berita"]
+            elif "articles" in data:
+                selected = data["articles"]
+            else:
+                selected = list(data.values())[0] if data else []
+        elif isinstance(data, list):
+            selected = data
+        else:
+            selected = []
     except:
         print("Gagal parsing JSON dari DeepSeek. Raw response:")
         print(result_text)
         selected = []
     
-    # Peta id asli ke artikel lengkap
+    # Gabungkan dengan data asli (untuk memastikan semua field ada)
     id_to_original = {i+1: all_articles[i] for i in range(len(all_articles))}
     top5_articles = []
     for item in selected:
-        orig_id = item.get("original_index") or item.get("id")
-        if orig_id and orig_id in id_to_original:
-            article_copy = id_to_original[orig_id].copy()
-            article_copy["curation_reason"] = item.get("reason", "")
+        found = None
+        # Coba cari berdasarkan title atau link
+        for orig in all_articles:
+            if orig["title"] == item.get("title") or orig.get("link") == item.get("link"):
+                found = orig
+                break
+        if found:
+            article_copy = found.copy()
+            article_copy["score"] = item.get("score", 3)
+            article_copy["reason"] = item.get("reason", "")
             top5_articles.append(article_copy)
+    
+    # Jika kurang dari 5, tambahkan sisa dengan skor 3 (fallback)
+    if len(top5_articles) < 5 and len(all_articles) >= 5:
+        # Ambil artikel yang belum terpilih (berdasarkan title)
+        selected_titles = [a["title"] for a in top5_articles]
+        for orig in all_articles:
+            if orig["title"] not in selected_titles and len(top5_articles) < 5:
+                article_copy = orig.copy()
+                article_copy["score"] = 3
+                article_copy["reason"] = "Fallback: berita ini cukup penting."
+                top5_articles.append(article_copy)
     
     return top5_articles
 
@@ -94,11 +129,11 @@ if __name__ == "__main__":
         print("Tidak ada artikel. Keluar.")
         exit(0)
     
-    print("🤖 Meminta DeepSeek memilih 5 berita terpenting (tanpa batasan teks)...")
+    print("🤖 Meminta DeepSeek memilih 5 berita terpenting dengan skor 1-5...")
     top5 = curate_top5(articles)
     print(f"✅ Terpilih {len(top5)} berita.")
     save_top5(top5)
     print("💾 Disimpan ke top5.json")
     
     for i, art in enumerate(top5, 1):
-        print(f"{i}. {art['title']} - {art.get('curation_reason', '')}")
+        print(f"{i}. {art['title']} - Score: {art.get('score', 'N/A')} - {art.get('reason', '')}")

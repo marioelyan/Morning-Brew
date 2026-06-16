@@ -25,11 +25,22 @@ def curate_top5(all_articles):
             "title": art["title"],
             "summary": summary_clean[:500],  # batasi agar token tidak overload
             "link": art.get("link", ""),
-            "published": art.get("published", "")
+            "published": art.get("published", ""),
+            "source": art.get("source", "").split('|')[0].strip()  # tambahkan sumber
         })
     
+    # ====== PROMPT BARU DENGAN ATURAN VARIASI ======
     prompt = """Anda adalah kurator berita bisnis dan teknologi startup yang sangat berpengalaman. 
-Tugas: pilih 5 berita yang paling penting, berdampak, dan ramai diperbincangkan dari daftar di bawah ini.
+Tugas: pilih 5 berita yang paling penting, berdampak, dan ramai diperbincangkan, tetapi dengan VARIASI yang tinggi.
+
+📌 ATURAN VARIASI (WAJIB):
+1. **Minimal harus mencakup 4 sektor berbeda** dari daftar sektor: AI, Space, Fintech/IPO, Regulasi, Startup/VC, Sosial/Media, Hardware/Deep Tech, Ekonomi/Makro.
+2. **Maksimal 2 berita dari sektor yang sama** (misal: jangan 3 tentang AI atau 3 tentang SpaceX).
+3. **Maksimal 1 berita dari sumber yang sama** (jangan pilih 2 dari TechCrunch, 2 dari Forbes, dll.).
+4. **Prioritaskan berita yang dipublikasikan dalam 24 jam terakhir** (lihat field "published").
+5. **Hindari mengulang topik yang sudah muncul di 2 hari terakhir** (gunakan kebijaksanaan Anda).
+
+Skor (1-5) tetap digunakan, tetapi pertimbangkan variasi sebagai faktor penambah nilai.
 
 Berikan penilaian (score) untuk setiap berita yang dipilih dengan skala 1-5, di mana:
 - 5 = sangat penting, berdampak besar, dan sangat ramai (misal: IPO besar, akuisisi raksasa, perubahan regulasi global)
@@ -38,8 +49,8 @@ Berikan penilaian (score) untuk setiap berita yang dipilih dengan skala 1-5, di 
 - 2 = kurang penting, dampak terbatas, tidak terlalu ramai
 - 1 = tidak penting (tidak akan dipilih)
 
-Kriteria penilaian:
-- Dampak terhadap pasar modal, startup, regulasi, atau industri teknologi secara luas.
+Kriteria penilaian (selain variasi):
+- Dampak terhadap pasar modal, bisnis, startup, regulasi, atau industri teknologi secara luas.
 - Jumlah nilai transaksi (pendanaan, akuisisi, IPO) jika ada.
 - Relevansi untuk eksekutif, investor, dan pelaku startup di Asia Tenggara (prioritaskan yang relevan).
 - Kebaruan dan potensi tren jangka panjang.
@@ -51,20 +62,22 @@ Output: Berikan dalam format JSON **tanpa komentar tambahan**, berupa array of o
   "link": (string, URL asli),
   "published": (string, tanggal publikasi asli),
   "score": (integer, 1-5),
-  "reason": (string singkat, alasan mengapa berita ini penting dan skor tersebut)
+  "reason": (string singkat, alasan mengapa berita ini penting dan skor tersebut, serta sebutkan sektornya)
 }
 
-Pilih 5 berita. Jika ada berita dengan skor di bawah 3, pertimbangkan untuk tidak memasukkannya, tetapi tetap usahakan 5 berita terbaik.
+Pilih 5 berita. Jika ada berita dengan skor di bawah 3, pertimbangkan untuk tidak memasukkannya, tetapi tetap usahakan 5 berita terbaik dengan variasi tinggi.
 
-Berikut daftar berita (format: ID | Title | Summary):
+Berikut daftar berita (format: ID | Sumber | Tanggal | Title | Summary):
 """
     for item in articles_for_prompt:
-        prompt += f"\n{item['id']} | {item['title']} | {item['summary']}..."
+        prompt += f"\n{item['id']} | {item.get('source', 'Unknown')} | {item['published']} | {item['title']} | {item['summary']}..."
+
+    # ====== AKHIR PROMPT ======
 
     response = client.chat.completions.create(
         model="deepseek-chat",
         messages=[
-            {"role": "system", "content": "Anda adalah kurator berita yang sangat selektif dan berpengalaman 20 tahun. Berikan output selalu dalam format JSON yang valid."},
+            {"role": "system", "content": "Anda adalah kurator berita yang sangat selektif dan berpengalaman 20 tahun. Utamakan variasi sektor dan sumber, serta kebaruan."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.3,
@@ -75,7 +88,6 @@ Berikut daftar berita (format: ID | Title | Summary):
     try:
         data = json.loads(result_text)
         if isinstance(data, dict):
-            # Coba cari array di dalam dict
             if "berita" in data:
                 selected = data["berita"]
             elif "articles" in data:
@@ -91,12 +103,11 @@ Berikut daftar berita (format: ID | Title | Summary):
         print(result_text)
         selected = []
     
-    # Gabungkan dengan data asli (untuk memastikan semua field ada)
+    # Gabungkan dengan data asli
     id_to_original = {i+1: all_articles[i] for i in range(len(all_articles))}
     top5_articles = []
     for item in selected:
         found = None
-        # Coba cari berdasarkan title atau link
         for orig in all_articles:
             if orig["title"] == item.get("title") or orig.get("link") == item.get("link"):
                 found = orig
@@ -107,9 +118,8 @@ Berikut daftar berita (format: ID | Title | Summary):
             article_copy["reason"] = item.get("reason", "")
             top5_articles.append(article_copy)
     
-    # Jika kurang dari 5, tambahkan sisa dengan skor 3 (fallback)
+    # Fallback jika kurang dari 5
     if len(top5_articles) < 5 and len(all_articles) >= 5:
-        # Ambil artikel yang belum terpilih (berdasarkan title)
         selected_titles = [a["title"] for a in top5_articles]
         for orig in all_articles:
             if orig["title"] not in selected_titles and len(top5_articles) < 5:

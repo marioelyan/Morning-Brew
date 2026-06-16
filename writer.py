@@ -12,28 +12,42 @@ def load_top5(filename="top5.json"):
         return json.load(f)
 
 def write_article(article):
-    """Generate artikel pendek (150-200 kata) dari satu berita"""
-    prompt = f"""Anda adalah jurnalis teknologi startup. Tulislah artikel singkat (150-200 kata) berdasarkan berita berikut:
+    """Generate artikel dengan gaya santai, informatif, dan mudah dipahami."""
+    prompt = f"""Anda adalah penulis berita teknologi dan bisnis yang handal. Tulislah artikel pendek (200-250 kata) berdasarkan berita berikut.
 
 Judul: {article['title']}
 Ringkasan: {article.get('summary', '')}
-Alasan penting: {article.get('curation_reason', '')}
+Alasan penting: {article.get('reason', '')}  (jika ada)
 
-Gaya penulisan: informatif, jelas, dan enak dibaca. Gunakan bahasa Indonesia yang baik.
-Output hanya teks artikel, tanpa judul ulang atau embel-embel.
+Gaya penulisan:
+- Gunakan bahasa Indonesia yang baik, tetapi santai dan tidak kaku.
+- Hindari istilah teknis yang berlebihan. Jika terpaksa, jelaskan dengan singkat.
+- Tulislah seperti kamu sedang bercerita kepada teman yang cerdas tapi bukan ahli di bidang itu.
+- Buat paragraf pembuka yang menarik, lalu jelaskan inti berita, dan akhiri dengan kesimpulan atau dampaknya.
+- Jangan gunakan subjudul, bullet points, atau markdown. Hanya paragraf berkesinambungan.
+- Jangan terlalu formal (seperti surat resmi), tapi juga jangan terlalu casual (seperti chat). Cari tengah-tengah: sopan, akrab, dan jelas.
+- Panjang: 200-250 kata.
+
+Judul alternatif:
+- Harus menarik, menggugah rasa penasaran, tapi tidak berlebihan (bukan clickbait).
+- Dilarang menggunakan emoticon, emoji, atau simbol aneh (seperti !!!, ???, dll).
+- Gunakan bahasa Indonesia yang natural dan tetap profesional.
+- Panjang judul: maksimal 10 kata.
+
+Output hanya teks artikel, tanpa embel-embel seperti "Tentu, ini artikelnya" atau judul ulang.
 """
     response = client.chat.completions.create(
         model="deepseek-chat",
         messages=[
-            {"role": "system", "content": "Anda seorang jurnalis berpengalaman di bidang startup dan teknologi."},
+            {"role": "system", "content": "Anda adalah penulis berita dengan gaya santai, informatif, dan mudah dicerna oleh pembaca umum."},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.7
+        temperature=0.6,  # sedikit kreatif, tapi tetap fokus
+        max_tokens=600
     )
     return response.choices[0].message.content
 
 def send_to_telegram(article_text, title):
-    """Kirim satu artikel ke Telegram sebagai pesan teks"""
     import subprocess
     caption = f"📝 *{title}*\n\n{article_text}"
     if len(caption) > 4096:
@@ -47,7 +61,6 @@ def send_to_telegram(article_text, title):
     ])
 
 def save_article_to_file(article_text, title, idx):
-    """Simpan artikel ke file (opsional)"""
     filename = f"article_{idx}.txt"
     with open(filename, "w", encoding="utf-8") as f:
         f.write(f"{title}\n\n{article_text}")
@@ -60,16 +73,15 @@ if __name__ == "__main__":
         print("Tidak ada top5.json. Jalankan curator dulu.")
         exit(0)
     
-    print(f"✍️ Menulis {len(top5)} artikel...")
-    for idx, article in enumerate(top5, 1):
-        print(f"  [{idx}/{len(top5)}] {article['title']}")
+    # Urutkan berdasarkan skor (jika ada) dari yang tertinggi
+    top5_sorted = sorted(top5, key=lambda x: x.get('score', 0), reverse=True)
+    
+    print(f"✍️ Menulis {len(top5_sorted)} artikel dengan gaya santai & informatif...")
+    for idx, article in enumerate(top5_sorted, 1):
+        print(f"  [{idx}/{len(top5_sorted)}] {article['title']}")
         text = write_article(article)
-        
-        # Kirim ke Telegram
         send_to_telegram(text, article['title'])
         print(f"    ✅ Terkirim ke Telegram")
-        
-        # Opsional: simpan ke file
         save_article_to_file(text, article['title'], idx)
     
-    print("✅ Semua artikel selesai ditulis dan dikirim.")
+    print("✅ Semua artikel selesai.")

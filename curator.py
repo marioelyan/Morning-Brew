@@ -187,4 +187,4 @@ if __name__ == "__main__":
     save_top5(top5)
     print("💾 Disimpan ke top5.json")
     for i, art in enumerate(top5, 1):
-        print(f"{i}. {art['title']} - Score: {art.get('score', 'N/A'}")
+        print(f"{i}. {art['title']} - Score: {art.get('score', 'N/A')}")

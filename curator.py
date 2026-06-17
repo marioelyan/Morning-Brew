@@ -10,37 +10,42 @@ client = OpenAI(
 )
 
 # ================================
-# TOOLS
+# TOOLS (DIPERBAIKI)
 # ================================
 
 def get_current_date_wib():
-    """Mengembalikan tanggal hari ini dalam zona WIB (UTC+7)"""
     tz_wib = timezone(timedelta(hours=7))
     return datetime.now(tz_wib)
 
 def parse_published_date(published_str):
-    """Mencoba parsing berbagai format tanggal publikasi, mengembalikan objek datetime"""
+    """Parsing berbagai format tanggal, mengembalikan datetime offset-aware (UTC)"""
+    if not published_str:
+        return None
     formats = [
-        "%a, %d %b %Y %H:%M:%S %z",   # RFC 822
-        "%a, %d %b %Y %H:%M:%S %Z",   # dengan timezone string
-        "%Y-%m-%dT%H:%M:%S%z",        # ISO 8601
+        "%a, %d %b %Y %H:%M:%S %z",
+        "%a, %d %b %Y %H:%M:%S %Z",
+        "%Y-%m-%dT%H:%M:%S%z",
         "%Y-%m-%d %H:%M:%S%z",
         "%a, %d %b %Y %H:%M:%S GMT",
         "%d %b %Y %H:%M:%S %z",
+        "%Y-%m-%d %H:%M:%S",        # naive, akan ditambah UTC
+        "%a, %d %b %Y %H:%M:%S",    # naive
     ]
     for fmt in formats:
         try:
-            return datetime.strptime(published_str, fmt)
+            dt = datetime.strptime(published_str, fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt
         except:
             continue
-    # Fallback: gunakan string apa adanya
     return None
 
 def days_ago(published_str):
-    """Menghitung berapa hari yang lalu artikel dipublikasikan (dalam UTC)"""
+    """Menghitung berapa hari yang lalu artikel dipublikasikan"""
     dt = parse_published_date(published_str)
     if dt is None:
-        return 99  # anggap sangat lama
+        return 99
     now = datetime.now(timezone.utc)
     delta = now - dt
     return delta.days
@@ -81,13 +86,14 @@ def curate_top5(all_articles):
     articles_for_prompt = []
     for idx, art in enumerate(all_articles, 1):
         summary_clean = art.get("summary", "").replace('\n', ' ').replace('\r', '')[:300]
-        days = days_ago(art.get("published", ""))
+        published_str = art.get("published", "")
+        days = days_ago(published_str) if published_str else 99
         sector = sector_detector(art['title'], art.get('summary', ''))
         articles_for_prompt.append({
             "id": idx,
             "title": art['title'],
             "summary": summary_clean,
-            "published": art.get('published', ''),
+            "published": published_str,
             "days_ago": days,
             "sector": sector,
             "source": art.get('source', '').split('|')[0].strip()
@@ -155,11 +161,10 @@ Berikut daftar berita (format: ID | Sektor | Hari Lalu | Sumber | Judul | Summar
 
     # Fallback jika kurang dari 5
     if len(top5_articles) < 5:
-        # Ambil artikel yang belum terpilih, prioritas recent
         selected_titles = [a["title"] for a in top5_articles]
         remaining = [a for a in all_articles if a["title"] not in selected_titles]
         # Urutkan berdasarkan kebaruan (days_ago)
-        remaining.sort(key=lambda x: days_ago(x.get("published", "")))
+        remaining.sort(key=lambda x: days_ago(x.get("published", "")) if x.get("published") else 99)
         for orig in remaining[:5-len(top5_articles)]:
             article_copy = orig.copy()
             article_copy["score"] = 3
@@ -182,4 +187,4 @@ if __name__ == "__main__":
     save_top5(top5)
     print("💾 Disimpan ke top5.json")
     for i, art in enumerate(top5, 1):
-        print(f"{i}. {art['title']} - Score: {art.get('score', 'N/A')}")
+        print(f"{i}. {art['title']} - Score: {art.get('score', 'N/A'}")

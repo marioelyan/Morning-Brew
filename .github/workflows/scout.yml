@@ -35,6 +35,11 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}  # opsional
         run: python writer.py
 
+      - name: Run newsletter (buat newsletter Substack)
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python newsletter.py
+
       - name: Kirim Artikel.txt ke Telegram
         run: |
           if [ -f Artikel.txt ]; then
@@ -54,3 +59,4 @@ jobs:
             news.json
             top5.json
             Artikel.txt
+            newsletter_substack.txt

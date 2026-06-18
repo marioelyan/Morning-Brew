@@ -67,7 +67,7 @@ def send_article_to_telegram(title, subtitle, full_content, seo, tags, assets):
 
 def write_full_article(article, index):
     prompt = f"""Kamu adalah mantan penulis newsletter Morning Brew, berpengalaman lebih dari 10 tahun dalam penulisan berita. 
-Tulislah sebuah artikel berita (total 250–300 kata) berdasarkan berita di bawah ini. 
+Tulislah sebuah artikel berita (total 250–300 kata) berdasarkan berita di bawah ini menggunakan bahasa Indonesia. 
 
 Gaya penulisan: santai tapi tidak lebay, seperti berbicara dengan teman yang pintar tapi bukan ahli. Gunakan bahasa yang mudah dipahami, hindari jargon berlebihan.
 
@@ -105,10 +105,10 @@ Output: Berikan dalam format JSON **tanpa komentar tambahan**:
     response = client.chat.completions.create(
         model="deepseek-chat",
         messages=[
-            {"role": "system", "content": "Anda adalah penulis berita dengan gaya santai namun cerdas. Output selalu JSON valid."},
+            {"role": "system", "content": "Anda adalah penulis berita untuk audiens Indonesia dengan gaya santai namun cerdas. Output selalu JSON valid."},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.6,
+        temperature=0.7,
         response_format={"type": "json_object"}
     )
 

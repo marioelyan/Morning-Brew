@@ -18,7 +18,6 @@ def get_current_date_wib():
     return datetime.now(tz_wib)
 
 def parse_published_date(published_str):
-    """Parsing berbagai format tanggal, mengembalikan datetime offset-aware (UTC)"""
     if not published_str:
         return None
     formats = [
@@ -28,8 +27,8 @@ def parse_published_date(published_str):
         "%Y-%m-%d %H:%M:%S%z",
         "%a, %d %b %Y %H:%M:%S GMT",
         "%d %b %Y %H:%M:%S %z",
-        "%Y-%m-%d %H:%M:%S",        # naive, akan ditambah UTC
-        "%a, %d %b %Y %H:%M:%S",    # naive
+        "%Y-%m-%d %H:%M:%S",
+        "%a, %d %b %Y %H:%M:%S",
     ]
     for fmt in formats:
         try:
@@ -42,7 +41,6 @@ def parse_published_date(published_str):
     return None
 
 def days_ago(published_str):
-    """Menghitung berapa hari yang lalu artikel dipublikasikan"""
     dt = parse_published_date(published_str)
     if dt is None:
         return 99
@@ -51,7 +49,6 @@ def days_ago(published_str):
     return delta.days
 
 def sector_detector(title, summary):
-    """Deteksi sektor berdasarkan keyword"""
     text = (title + " " + summary).lower()
     sectors = {
         "AI": ["ai", "artificial intelligence", "machine learning", "chatgpt", "claude", "llm", "model"],
@@ -81,6 +78,14 @@ def save_top5(articles, filename="top5.json"):
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(articles, f, ensure_ascii=False, indent=2)
 
+def extract_json(text):
+    """Ekstrak JSON dari teks yang mungkin mengandung markdown atau teks tambahan."""
+    # Coba cari pola JSON array atau objek: [...], {...}
+    match = re.search(r'(\[.*\]|\{.*\})', text, re.DOTALL)
+    if match:
+        return match.group(1)
+    return text
+
 def curate_top5(all_articles):
     # Siapkan data untuk prompt
     articles_for_prompt = []
@@ -99,6 +104,7 @@ def curate_top5(all_articles):
             "source": art.get('source', '').split('|')[0].strip()
         })
 
+    # ===== PROMPT (TIDAK DIUBAH) =====
     prompt = f"""Anda adalah kurator berita bisnis dan teknologi untuk newsletter "The Quartr" yang berbasis di Indonesia (UTC+7). 
 Tugas: pilih 5 berita PALING PENTING dan RELEVAN UNTUK HARI INI dari daftar di bawah.
 
@@ -130,6 +136,7 @@ Berikut daftar berita (format: ID | Sektor | Hari Lalu | Sumber | Judul | Summar
     for item in articles_for_prompt:
         prompt += f"\n{item['id']} | {item['sector']} | {item['days_ago']} hari | {item['source']} | {item['title']} | {item['summary']}"
 
+    # ===== PANGGIL API =====
     response = client.chat.completions.create(
         model="deepseek-chat",
         messages=[
@@ -141,14 +148,53 @@ Berikut daftar berita (format: ID | Sektor | Hari Lalu | Sumber | Judul | Summar
     )
 
     result_text = response.choices[0].message.content
-    try:
-        data = json.loads(result_text)
-        selected = data.get("berita", data.get("articles", []))
-    except:
-        print("Gagal parsing JSON. Raw:", result_text[:200])
-        selected = []
 
-    # Gabungkan dengan data asli
+    # ===== LOGGING RAW RESPONSE =====
+    print("📝 Raw response dari DeepSeek (500 karakter pertama):")
+    print(result_text[:500])
+    print("... (sisa dipotong)\n")
+
+    # ===== PARSING YANG LEBIH ROBUST =====
+    selected = []
+    try:
+        # Coba ekstrak JSON dengan regex
+        clean_text = extract_json(result_text)
+        data = json.loads(clean_text)
+        if isinstance(data, dict):
+            # Cari array di dalam dict
+            if "berita" in data:
+                selected = data["berita"]
+            elif "articles" in data:
+                selected = data["articles"]
+            else:
+                # Jika tidak ada key, cari nilai pertama yang berupa list
+                for value in data.values():
+                    if isinstance(value, list):
+                        selected = value
+                        break
+        elif isinstance(data, list):
+            selected = data
+    except json.JSONDecodeError as e:
+        print(f"❌ Gagal parsing JSON: {e}")
+        print("🔍 Mencoba parsing alternatif...")
+        # Coba cari pola array di seluruh teks
+        try:
+            # Cari pola seperti [ { ... }, { ... } ]
+            match = re.search(r'\[\s*\{.*\}\s*\]', result_text, re.DOTALL)
+            if match:
+                alt_text = match.group(0)
+                data_alt = json.loads(alt_text)
+                if isinstance(data_alt, list):
+                    selected = data_alt
+                    print("✅ Berhasil parsing alternatif (array)")
+        except:
+            pass
+
+    # Jika selected masih kosong, beri peringatan
+    if not selected:
+        print("⚠️ Tidak ada data terpilih dari AI. Akan menggunakan fallback.")
+
+    # ===== GABUNGKAN DENGAN DATA ASLI =====
     id_to_original = {i+1: all_articles[i] for i in range(len(all_articles))}
     top5_articles = []
     for item in selected:
@@ -159,11 +205,12 @@ Berikut daftar berita (format: ID | Sektor | Hari Lalu | Sumber | Judul | Summar
             article_copy["reason"] = item.get("reason", "")
             top5_articles.append(article_copy)
 
-    # Fallback jika kurang dari 5
+    # ===== FALLBACK JIKA KURANG DARI 5 =====
     if len(top5_articles) < 5:
+        print(f"⚠️ Hanya {len(top5_articles)} artikel terpilih. Menambahkan fallback...")
         selected_titles = [a["title"] for a in top5_articles]
         remaining = [a for a in all_articles if a["title"] not in selected_titles]
-        # Urutkan berdasarkan kebaruan (days_ago)
+        # Urutkan berdasarkan kebaruan
         remaining.sort(key=lambda x: days_ago(x.get("published", "")) if x.get("published") else 99)
         for orig in remaining[:5-len(top5_articles)]:
             article_copy = orig.copy()

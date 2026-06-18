@@ -71,12 +71,12 @@ Tulislah sebuah artikel berita (total 250–300 kata) berdasarkan berita di bawa
 
 Gaya penulisan: santai tapi tidak lebay, seperti berbicara dengan teman yang pintar tapi bukan ahli. Gunakan bahasa yang mudah dipahami, hindari jargon berlebihan.
 
-Struktur narasi (tetapi **tanpa subjudul** – tulis sebagai paragraf yang mengalir):
+Struktur narasi (tetapi **tanpa subjudul** – tulis sebagai paragraf yang mengalir, paragraf dipisah menjadi 3-4 bagian):
 1. **Pembuka**: Jelaskan inti berita secara ringkas dan jelas (TL;DR).
 2. **Tengah**: Uraikan mengapa pembaca harus peduli, apa dampaknya secara konkret (Why it matters).
 3. **Penutup**: Tarik ke perspektif yang lebih luas atau arah tren selanjutnya (Big picture).
 
-Pastikan ketiga bagian ini tersambung dengan mulus, bukan terpotong-potong.
+Pastikan ketiga bagian ini tersambung dengan mulus, namun tetap beri jarak spasi antar paragraf.
 
 📌 FORMAT OUTPUT (WAJIB):
 - **Judul Alternatif**: Judul baru menarik, tanpa emoticon.

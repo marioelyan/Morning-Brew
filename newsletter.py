@@ -70,10 +70,10 @@ def generate_hook(articles):
     prompt = f"""Anda adalah penulis untuk newsletter "The Quartr". 
 Buatlah paragraf pembuka (hook) yang menarik untuk newsletter hari ini.
 
-📌 Gaya penulisan:
-- Santai namun profesional, seperti teman yang cerdas.
-- Jangan gunakan kata slang seperti "lo", "gue", "anjay", "bayangin lo", dll.
-- Jangan berlebihan atau hiperbola.
+📌 Gaya penulisan: 
+- Santai tapi profesional, seperti berbicara dengan teman yang cerdas tapi bukan ahli.
+- Gunakan bahasa yang mudah dipahami.
+- Hindari jargon berlebihan. Gunakan kata "kamu" untuk menyebut pembaca.
 - 1 paragraf (50-80 kata), mengalir, dan relevan dengan berita hari ini.
 
 Berita hari ini:
@@ -96,10 +96,10 @@ def generate_quarter_time(articles):
     prompt = f"""Anda adalah penulis untuk newsletter "The Quartr". 
 Buatlah konten untuk segmen "Quarter Time" — bagian ringan yang memberikan nilai tambah.
 
-📌 Gaya penulisan:
-- Santai namun profesional, seperti berbicara dengan teman yang cerdas tapi bukan ahli. Gunakan kata "kamu" 
-- Jangan gunakan kata slang seperti "lo", "gue", "anjay", dll.
-- Jangan berlebihan atau hiperbola.
+📌 Gaya penulisan: 
+- Santai tapi profesional, seperti berbicara dengan teman yang cerdas tapi bukan ahli.
+- Gunakan bahasa yang mudah dipahami.
+- Hindari jargon berlebihan. Gunakan kata "kamu" untuk menyebut pembaca.
 - 1-2 paragraf (80-120 kata), isinya bisa: rekomendasi buku/youtube, kutipan inspiratif, analisis tren, atau fakta menarik.
 - Relevan dengan tema berita hari ini.
 
@@ -167,7 +167,9 @@ Buatlah subjek email (1 kalimat, 10-15 kata) yang menarik dan profesional.
 📌 Gaya:
 - Menarik, membuat penasaran, tapi tidak clickbait.
 - Mencerminkan tema utama hari ini.
-- Gunakan bahasa Indonesia yang baik, tanpa slang.
+- Gaya penulisan santai tapi profesional, seperti berbicara dengan teman yang cerdas tapi bukan ahli.
+- Gunakan bahasa yang mudah dipahami.
+- Hindari jargon berlebihan. Gunakan kata "kamu" untuk menyebut pembaca.
 
 Berita hari ini:
 """

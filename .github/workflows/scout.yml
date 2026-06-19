@@ -1,8 +1,8 @@
 name: RSS Scout
 
 on:
-  schedule:
-    - cron: '0 22 * * *'   # 22:00 UTC = 05:00 WIB
+  # schedule:
+  #  - cron: '0 22 * * *'   # 22:00 UTC = 05:00 WIB
   workflow_dispatch:
 
 jobs:
@@ -43,7 +43,7 @@ jobs:
       - name: Buat ZIP dan kirim ke Telegram
         run: |
           # Buat ZIP dari semua file output
-          zip -j the-quartr-output.zip news.json top5.json Artikel.txt newsletter_substack.txt
+          zip -j the-quartr-output.zip news.json top5.json Artikel.txt template_newsletter.txt
           if [ -f the-quartr-output.zip ]; then
             curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
               -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \

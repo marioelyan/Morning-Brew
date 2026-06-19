@@ -1,0 +1,43 @@
+name: Daily Data (Scrape & Curate)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  data-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install feedparser beautifulsoup4 openai requests
+      
+      - name: Run scraper
+        run: python script_research.py
+      
+      - name: Run curator
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python curator.py
+
+      - name: Kirim news.json dan top5.json ke Telegram
+        run: |
+          if [ -f news.json ] && [ -f top5.json ]; then
+            zip -j daily-data.zip news.json top5.json
+            curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
+              -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+              -F document="@daily-data.zip" \
+              -F caption="📊 Data Harian The Quartr — $(date -u +'%Y-%m-%d')%0A%0A📁 news.json & top5.json (bahan baku kurasi)."
+          else
+            echo "File tidak lengkap!"
+          fi
+
+      - name: Upload artifacts (backup)
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-data
+          path: |
+            news.json
+            top5.json

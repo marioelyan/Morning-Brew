@@ -78,12 +78,12 @@ def generate_hook_and_bullets(articles):
     # Ambil judul untuk konteks
     titles = [art.get('title', '') for art in articles[:5]]
 
-    prompt = f"""Anda adalah penulis untuk newsletter "The Quartr". 
+    prompt = f"""Kamu adalah mantan penulis newsletter "Morning Brew". Berpengalaman 20 tahun dalam penulisan newsletter maupun artikel berita.
 Buatlah dua bagian untuk pembuka newsletter hari ini:
 
 **Bagian 1: Paragraf Hook (Pembuka)**
 - Tujuannya: MENARIK PERHATIAN, bukan merangkum berita.
-- Bisa berupa: anekdot personal, pertanyaan reflektif, observasi ringan, sapaan hangat, atau fakta menarik yang tidak disebutkan di berita.
+- Bisa berupa: Pertanyaan reflektif, observasi ringan, sapaan hangat, atau fakta menarik yang tidak disebutkan di berita.
 - JANGAN menyebutkan judul atau detail berita di hook — itu tugas bullet list di bawah.
 - 1 paragraf (40-60 kata).
 - Gaya: santai, personal, seperti berbicara dengan teman yang pintar.
@@ -115,7 +115,7 @@ Output: Berikan dalam format JSON **tanpa komentar tambahan**:
             {"role": "system", "content": "Anda penulis newsletter dengan gaya personal dan hangat. Hook harus natural, bukan ringkasan berita."},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.8,
+        temperature=0.7,
         response_format={"type": "json_object"}
     )
 
@@ -141,13 +141,13 @@ Output: Berikan dalam format JSON **tanpa komentar tambahan**:
         return hook, bullets
 
 def generate_quarter_time(articles):
-    prompt = f"""Anda adalah penulis untuk newsletter "The Quartr". 
+    prompt = f"""Kamu adalah mantan penulis newsletter "Morning Brew". Berpengalaman 20 tahun dalam penulisan newsletter maupun artikel berita.
 Buatlah konten untuk segmen "Quarter Time" — bagian ringan yang memberikan nilai tambah.
 
 📌 Gaya penulisan: 
 - Santai tapi profesional, seperti berbicara dengan teman yang cerdas.
 - 1-2 paragraf (80-120 kata), isinya bisa: rekomendasi buku/youtube, kutipan inspiratif, analisis tren, atau fakta menarik.
-- Relevan dengan apa yang terjadi hari ini.
+
 Berita hari ini:
 """
     for art in articles[:5]:
@@ -174,8 +174,8 @@ def generate_quiz(articles):
                 break
     topic = topics[0] if topics else "teknologi"
 
-    prompt = f"""Anda adalah pembuat kuis untuk newsletter "The Quartr". 
-Buatlah 1 pertanyaan pilihan ganda tentang **pengetahuan umum** yang relevan dengan tema berita hari ini.
+    prompt = f"""Kamu adalah mantan penulis newsletter "Morning Brew". Berpengalaman 20 tahun dalam penulisan newsletter maupun artikel berita.
+Buatlah mini kuis dengan 1 pertanyaan pilihan ganda tentang **pengetahuan umum** yang relevan dengan tema berita hari ini.
 
 📌 Aturan:
 - Pertanyaan tentang pengetahuan umum (sejarah teknologi, ekonomi, tokoh penting, fakta sains, dll.)
@@ -214,7 +214,7 @@ Tema hari ini (dari judul berita):
         }
 
 def generate_subject(articles):
-    prompt = f"""Anda adalah penulis untuk newsletter "The Quartr". 
+    prompt = f"""Kamu adalah mantan penulis newsletter "Morning Brew". Berpengalaman 20 tahun dalam penulisan newsletter maupun artikel berita.
 Buatlah subjek email (1 kalimat, 10-15 kata) yang menarik dan profesional.
 
 📌 Gaya:

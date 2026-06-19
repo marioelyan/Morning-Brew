@@ -63,7 +63,7 @@ def write_draft_article(article, index):
     3. Gambaran Besar (Arah tren)
     Gaya: datar, faktual, tanpa opini, tanpa sapaan personal.
     """
-    prompt = f"""Anda adalah mesin penulis draft berita dengan gaya **"Datar dan Faktual"** menggunakan bahasa Indonesia. 
+    prompt = f"""Anda adalah mesin penulis draft berita dengan gaya **"Datar dan Faktual"** menggunakan bahasa Indonesia yang mudah dipahami dalam pemilihan kata atau kalimat. 
 Tulislah draft artikel berdasarkan berita di bawah ini.
 
 📌 **STRUKTUR WAJIB (Morning Brew Style):**

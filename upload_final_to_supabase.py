@@ -32,17 +32,12 @@ def extract_published_date(content):
     Mencari pola: *The Quartr — Saturday, 20 June 2026*
     Mengembalikan string YYYY-MM-DD, atau None jika gagal.
     """
-    # Cari baris yang mengandung "The Quartr — "
     match = re.search(r'\*The Quartr — (.*?)\*', content)
     if not match:
         return None
 
-    date_string = match.group(1).strip()  # "Saturday, 20 June 2026"
-    
-    # Terjemahkan nama hari/bulan ke bahasa Inggris (sudah format standar)
-    # Karena template menggunakan bahasa Inggris: "Saturday, 20 June 2026"
+    date_string = match.group(1).strip()
     try:
-        # Format: "Saturday, 20 June 2026"
         parsed_date = datetime.strptime(date_string, "%A, %d %B %Y")
         return parsed_date.strftime("%Y-%m-%d")
     except ValueError as e:
@@ -59,9 +54,10 @@ def parse_final_edition(filename="final_edition.txt"):
     Membaca file final_edition.txt dan mengekstrak:
     - title   : dari 📰 **...**
     - hook    : dari ## 🎯 The Hook
-    - quarter_time : dari ## 🧠 Quarter Time
-    - quiz    : dari ## 🎮 Gamification
+    - pojok   : dari ## 🧠 Pojok 90 derajat
+    - bonding : dari ## 🎮 Bonding
     - content : seluruh teks
+    - published_date : dari header
     """
     try:
         with open(filename, "r", encoding="utf-8") as f:
@@ -82,13 +78,13 @@ def parse_final_edition(filename="final_edition.txt"):
     hook_match = re.search(r'## 🎯 The Hook\n(.*?)\n\n📌', content, re.DOTALL)
     hook = hook_match.group(1).strip() if hook_match else ""
 
-    # === Ekstrak Quarter Time ===
-    qt_match = re.search(r'## 🧠 Quarter Time\n(.*?)\n\n## 🎮', content, re.DOTALL)
-    quarter_time = qt_match.group(1).strip() if qt_match else ""
+    # === Ekstrak Pojok 90 derajat ===
+    pojok_match = re.search(r'## 🧠 Pojok 90 derajat\n(.*?)\n\n## 🎮', content, re.DOTALL)
+    pojok = pojok_match.group(1).strip() if pojok_match else ""
 
-    # === Ekstrak Kuis ===
-    quiz_match = re.search(r'## 🎮 Gamification\n(.*?)\n\n📬', content, re.DOTALL)
-    quiz = quiz_match.group(1).strip() if quiz_match else ""
+    # === Ekstrak Bonding ===
+    bonding_match = re.search(r'## 🎮 Bonding\n(.*?)\n\n## 📌', content, re.DOTALL)
+    bonding = bonding_match.group(1).strip() if bonding_match else ""
 
     # === Ekstrak Tanggal ===
     published_date = extract_published_date(content)
@@ -97,9 +93,9 @@ def parse_final_edition(filename="final_edition.txt"):
         "title": title,
         "content": content,
         "hook": hook,
-        "quarter_time": quarter_time,
-        "quiz": quiz,
-        "published_date": published_date  # Bisa None jika gagal
+        "pojok": pojok,
+        "bonding": bonding,
+        "published_date": published_date
     }
 
 
@@ -127,21 +123,19 @@ def upload_final_edition(data, published_date):
         "title": data["title"],
         "content": data["content"],
         "hook": data["hook"],
-        "quarter_time": data["quarter_time"],
-        "quiz": data["quiz"],
+        "quarter_time": data["pojok"],      # Nama kolom tetap quarter_time
+        "quiz": data["bonding"],            # Nama kolom tetap quiz
         "updated_at": datetime.now().isoformat()
     }
 
     try:
         if existing.data:
-            # Update jika sudah ada
             supabase.table("final_editions") \
                 .update(row) \
                 .eq("published_date", published_date) \
                 .execute()
             print(f"✅ Edisi {published_date} berhasil diUPDATE di Supabase.")
         else:
-            # Insert baru
             supabase.table("final_editions") \
                 .insert(row) \
                 .execute()

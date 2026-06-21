@@ -68,26 +68,33 @@ Tulislah draft artikel berdasarkan berita di bawah ini.
 
 📌 **STRUKTUR WAJIB (Morning Brew Style):**
 Tulis dalam 3 paragraf yang mengalir, dengan pembagian berikut:
+
 - **Paragraf 1 (TL;DR)**: Apa yang terjadi? Siapa pelakunya? Berapa nilainya? (Fakta mentah).
-- **Paragraf 2 (Dampak)**: Mengapa ini penting secara ekonomi/bisnis? Siapa yang terdampak? (Analisis objektif).
-- **Paragraf 3 (Gambaran Besar)**: Apa implikasi jangka panjang? Bagaimana tren ke depannya? (Spekulasi berbasis fakta).
+
+- **Paragraf 2 (Dampak)**: 
+  **Tujuan:** Menjelaskan secara logis dan terstruktur mengapa peristiwa ini penting.
+  **WAJIB mengikuti 3 langkah ini secara berurutan:**
+  1. **Siapa yang terdampak langsung?** (Perusahaan, industri, konsumen, atau regulator tertentu).
+  2. **Apa konsekuensi konkretnya?** (Harga naik/turun, lapangan kerja, akses pasar, regulasi, dll.).
+  3. **Mengapa konsekuensi itu penting?** (Hubungkan dengan kepentingan pembaca: biaya, peluang, risiko, atau perubahan kebiasaan).
+  **LARANGAN:** Jangan menulis kalimat general seperti "Ini penting karena..." tanpa menyebutkan siapa dan apa dampaknya.
+
+- **Paragraf 3 (Gambaran Besar)**: 
+  Apa implikasi jangka panjang? Bagaimana tren ke depannya? (Spekulasi berbasis fakta).
+  **WAJIB:** Akhiri dengan 1 kalimat yang merujuk pada tren global atau perbandingan dengan industri lain.
+
+📌 **CONTOH PARAGRAF DAMPAK YANG BAIK (Referensi):**
+--- MULAI CONTOH ---
+"Langkah ini langsung memengaruhi ekosistem startup AI di Asia. Startup yang selama ini bergantung pada chip Nvidia dengan harga mahal kini punya alternatif dari Amazon yang lebih murah. Biaya pengembangan AI bisa turun 20-30%, yang berarti lebih banyak startup bisa mengakses teknologi ini. Bagi investor, ini juga sinyal bahwa persaingan di pasar chip AI mulai memanas."
+--- AKHIR CONTOH ---
 
 📌 **ATURAN KETAT:**
 1. **HARAM** menggunakan kata "kamu", "Anda", atau sapaan personal lainnya.
 2. **HARAM** menambahkan opini, sindiran, atau kata-kata "menarik", "fantastis", "luar biasa".
 3. **HARAM** menggunakan frasa template seperti "Di sisi lain", "Ke depannya", "Tidak hanya... tapi juga".
-4. Tulis seperti laporan keuangan: **Kering, Padat, dan Objektif**.
-5. Panjang total: 250-300 kata.
-
-📌 **FORMAT OUTPUT (WAJIB JSON):**
-{{
-  "title": "judul alternatif (tanpa emoticon, max 10 kata)",
-  "subtitle": "subtitle singkat (max 15 kata)",
-  "content": "teks artikel utuh (250-300 kata) dengan struktur 3 paragraf Morning Brew",
-  "seo": "kalimat SEO (1 kalimat, mengandung keyword utama)",
-  "tags": "tag1, tag2, tag3, tag4, tag5 (5-7 kata kunci)",
-  "assets": ["url_gambar1", "url_gambar2"]
-}}
+4. **HARAM** memulai paragraf dampak dengan "Ini penting karena..." atau "Hal ini berdampak..." tanpa menyebut subjek spesifik.
+5. Tulis seperti laporan keuangan: **Kering, Padat, dan Objektif**, tapi tetap **logis dan terstruktur**.
+6. Panjang total: 250-300 kata.
 
 📰 DATA BERITA:
 Judul: {article['title']}

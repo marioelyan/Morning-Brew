@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import requests
 from openai import OpenAI
 from datetime import datetime, timedelta, timezone
@@ -38,13 +39,12 @@ def save_article(content, filename="Artikel.txt"):
         f.write(content)
 
 def format_article_text(data, index):
-    """Format untuk file .txt (draft mentah)."""
     text = f"📰 ARTIKEL #{index}\n\n"
-    text += f"Judul: {data['title']}\n"
-    text += f"Subtitle: {data['subtitle']}\n\n"
-    text += f"{data['content']}\n\n"
-    text += f"Kalimat SEO: {data['seo']}\n"
-    text += f"Tags: {data['tags']}\n"
+    text += f"Judul: {data.get('title', '')}\n"
+    text += f"Subtitle: {data.get('subtitle', '')}\n\n"
+    text += f"{data.get('content', '')}\n\n"
+    text += f"Kalimat SEO: {data.get('seo', '')}\n"
+    text += f"Tags: {data.get('tags', '')}\n"
     text += f"Assets (Gambar):\n"
     for asset in data.get('assets', []):
         text += f"- {asset}\n"
@@ -63,6 +63,7 @@ def write_draft_article(article, index):
     3. Gambaran Besar (Arah tren)
     Gaya: datar, faktual, tanpa opini, tanpa sapaan personal.
     """
+    # --- PROMPT (TIDAK DIUBAH) ---
     prompt = f"""Anda adalah mesin penulis draft berita dengan gaya **"Datar dan Faktual"** menggunakan bahasa Indonesia yang mudah dipahami dalam pemilihan kata atau kalimat. 
 Tulislah draft artikel berdasarkan berita di bawah ini.
 
@@ -117,36 +118,76 @@ Ringkasan: {article.get('summary', '')}
 Skor: {article.get('score', 3)}
 Alasan: {article.get('reason', '')}
 """
-    response = client.chat.completions.create(
-        model="deepseek-chat",
-        messages=[
-            {"role": "system", "content": "Anda adalah penulis draft berita yang objektif dan datar. Output selalu JSON valid."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.3,  # rendah agar konsisten dan datar
-        response_format={"type": "json_object"}
-    )
-
+    # --- PANGGIL API (tanpa response_format) ---
     try:
-        data = json.loads(response.choices[0].message.content)
-        if not data.get('assets'):
-            keyword = data.get('tags', '').split(',')[0].strip() if data.get('tags') else article['title'][:30]
-            data['assets'] = [fetch_asset_image(keyword)]
-        # Pastikan semua field ada
-        for key in ['title', 'subtitle', 'content', 'seo', 'tags', 'assets']:
-            if key not in data:
-                data[key] = ""
-        return data
+        response = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": "Anda adalah penulis draft berita yang objektif dan datar. Output selalu JSON valid."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.3
+        )
     except Exception as e:
-        print(f"Gagal parsing JSON untuk artikel {index}: {e}")
+        print(f"❌ API error untuk artikel {index}: {e}")
         return {
-            "title": article['title'],
-            "subtitle": "Ringkasan berita hari ini",
-            "content": article.get('summary', 'Berita ini penting untuk diikuti.'),
-            "seo": article['title'],
+            "title": article.get('title', 'Berita tanpa judul'),
+            "subtitle": "Ringkasan berita",
+            "content": article.get('summary', 'Konten tidak tersedia.'),
+            "seo": article.get('title', ''),
             "tags": "berita, teknologi, bisnis",
             "assets": [fetch_asset_image("technology")]
         }
+
+    raw = response.choices[0].message.content
+    print(f"📝 Raw response artikel #{index} (200 karakter pertama): {raw[:200]}...")
+
+    # --- PARSING JSON (manual + regex) ---
+    data = None
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        # Cari pola JSON {...} di tengah teks
+        match = re.search(r'\{.*\}', raw, re.DOTALL)
+        if match:
+            try:
+                data = json.loads(match.group())
+            except json.JSONDecodeError:
+                pass
+
+    # --- FALLBACK jika parsing gagal ---
+    if data is None:
+        print(f"❌ Gagal parsing JSON untuk artikel {index}. Gunakan fallback.")
+        return {
+            "title": article.get('title', 'Berita tanpa judul'),
+            "subtitle": "Ringkasan berita",
+            "content": article.get('summary', 'Konten tidak tersedia.'),
+            "seo": article.get('title', ''),
+            "tags": "berita, teknologi, bisnis",
+            "assets": [fetch_asset_image("technology")]
+        }
+
+    # --- PASTIKAN SEMUA FIELD ADA ---
+    if not data.get('assets'):
+        keyword = data.get('tags', '').split(',')[0].strip() if data.get('tags') else article['title'][:30]
+        data['assets'] = [fetch_asset_image(keyword)]
+
+    for key in ['title', 'subtitle', 'content', 'seo', 'tags', 'assets']:
+        if key not in data or not data[key]:
+            if key == 'title':
+                data[key] = article.get('title', 'Berita tanpa judul')
+            elif key == 'content':
+                data[key] = article.get('summary', 'Konten tidak tersedia.')
+            elif key == 'subtitle':
+                data[key] = "Ringkasan berita"
+            elif key == 'seo':
+                data[key] = article.get('title', '')
+            elif key == 'tags':
+                data[key] = "berita, teknologi, bisnis"
+            elif key == 'assets':
+                data[key] = [fetch_asset_image("technology")]
+
+    return data
 
 if __name__ == "__main__":
     print("📖 Membaca top5.json...")
@@ -155,13 +196,15 @@ if __name__ == "__main__":
         print("Tidak ada top5.json. Jalankan curator dulu.")
         exit(0)
 
+    print(f"✅ {len(top5)} artikel ditemukan di top5.json.")
+
     top5_sorted = sorted(top5, key=lambda x: x.get('score', 0), reverse=True)
 
     full_archive = f"The Quartr - Newsletter {get_current_date_wib()}\n\n"
     full_archive += "="*50 + "\n\n"
 
     for idx, article in enumerate(top5_sorted, 1):
-        print(f"✍️ Menulis draft mentah artikel #{idx}: {article['title']}")
+        print(f"✍️ Menulis draft mentah artikel #{idx}: {article.get('title', 'TANPA JUDUL')}")
         data = write_draft_article(article, idx)
         full_archive += format_article_text(data, idx)
 

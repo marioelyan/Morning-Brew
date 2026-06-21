@@ -125,20 +125,25 @@ Konten: {article.get('content', '')}
 SEO: {article.get('seo', '')}
 Tags: {article.get('tags', '')}
 
-📌 **STRUKTUR OUTPUT (WAJIB):**
-Tulis ulang menjadi 4-5 paragraf mengalir dengan struktur:
-1. Hook (analogi, ironi, atau fakta mengejutkan)
-2. Berita Inti (fakta mentah)
-3. Dampak (siapa terdampak, konsekuensi)
-4. Gambaran Besar (tren global)
-5. Penutup (prediksi atau pertanyaan)
+ATURAN GAYA (IKUTI):
+1. Pembuka: Jangan pakai "Bayangkan". Pakai salah satu: analogi, ironi, atau fakta mengejutkan.
+2. Transisi: Pakai kata sambung alami (Tapi, Sementara itu, Yang jadi masalah).
+3. Kalimat pendek: Sisipkan 1-2 kalimat pendek (3-5 kata) per paragraf.
+4. Humor: Tambahkan 1 observasi ringan/sindiran halus di setiap artikel.
+5. Penutup: Jangan pakai "Pertanyaannya sekarang". Akhiri dengan prediksi atau implikasi.
 
-📌 **ATURAN KETAT:**
-- 80% kalimat: 10-20 kata. 20% kalimat: pendek.
-- Gunakan transisi percakapan.
-- HARAM menggunakan kata: berdasarkan, sejalan dengan, dalam rangka, guna, oleh karena itu, adapun.
-- JANGAN ubah fakta penting (angka, nama, tanggal).
+LARANGAN:
+- Jangan pakai: berdasarkan, sejalan dengan, dalam rangka, guna, oleh karena itu, adapun.
+- Jangan pakai: dampaknya langsung terasa, ke depannya, tidak hanya... tapi juga.
 
+DRAFT MENTAH:
+Judul: {article.get('title', '')}
+Subtitle: {article.get('subtitle', '')}
+Konten: {article.get('content', '')}
+
+Output JSON:
+{{ "title": "judul baru", "subtitle": "subtitle baru", "content": "teks artikel", "seo": "kalimat SEO", "tags": "tag1, tag2, tag3" }}
+"""
 Output harus berupa JSON dengan field: 
 {{ "title": "judul baru", "subtitle": "subtitle baru", "content": "teks artikel", "seo": "kalimat SEO", "tags": "tag1, tag2" }}
 """

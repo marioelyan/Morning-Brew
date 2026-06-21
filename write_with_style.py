@@ -141,9 +141,6 @@ Judul: {article.get('title', '')}
 Subtitle: {article.get('subtitle', '')}
 Konten: {article.get('content', '')}
 
-Output JSON:
-{{ "title": "judul baru", "subtitle": "subtitle baru", "content": "teks artikel", "seo": "kalimat SEO", "tags": "tag1, tag2, tag3" }}
-"""
 Output harus berupa JSON dengan field: 
 {{ "title": "judul baru", "subtitle": "subtitle baru", "content": "teks artikel", "seo": "kalimat SEO", "tags": "tag1, tag2" }}
 """

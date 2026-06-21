@@ -51,18 +51,32 @@ def format_article_text(data, index):
     text += "\n" + "="*60 + "\n\n"
     return text
 
+def map_fields(data):
+    """Mapping field bahasa Indonesia ke bahasa Inggris."""
+    if "judul" in data and "title" not in data:
+        data["title"] = data.pop("judul")
+    
+    # Gabungkan paragraf_1, paragraf_2, paragraf_3 menjadi content
+    content_parts = []
+    for key in ["paragraf_1", "paragraf_2", "paragraf_3"]:
+        if key in data:
+            content_parts.append(data.pop(key))
+    if content_parts:
+        data["content"] = "\n\n".join(content_parts)
+    
+    if "subjudul" in data and "subtitle" not in data:
+        data["subtitle"] = data.pop("subjudul")
+    
+    if "deskripsi" in data and "seo" not in data:
+        data["seo"] = data.pop("deskripsi")
+    
+    return data
+
 # ================================
-# WRITER CORE (DRAFT MENTAH)
+# WRITER CORE
 # ================================
 
 def write_draft_article(article, index):
-    """
-    Menghasilkan draft mentah dengan struktur Morning Brew:
-    1. TL;DR (Apa yang terjadi)
-    2. Dampak (Mengapa ini penting)
-    3. Gambaran Besar (Arah tren)
-    Gaya: datar, faktual, tanpa opini, tanpa sapaan personal.
-    """
     # --- PROMPT (TIDAK DIUBAH) ---
     prompt = f"""Anda adalah mesin penulis draft berita dengan gaya **"Datar dan Faktual"** menggunakan bahasa Indonesia yang mudah dipahami dalam pemilihan kata atau kalimat. 
 Tulislah draft artikel berdasarkan berita di bawah ini.
@@ -111,6 +125,7 @@ Tulis dalam 3 paragraf yang mengalir, dengan pembagian berikut:
 5. **HARAM** memulai paragraf gambaran besar dengan "Tren ini menunjukkan..." tanpa didukung fakta.
 6. Tulis seperti laporan keuangan: **Kering, Padat, dan Objektif**, tapi tetap **logis dan terstruktur**.
 7. Panjang total: 250-300 kata.
+8. **WAJIB** gunakan field JSON: judul, paragraf_1, paragraf_2, paragraf_3, subjudul, deskripsi.
 
 📰 DATA BERITA:
 Judul: {article['title']}
@@ -123,7 +138,7 @@ Alasan: {article.get('reason', '')}
         response = client.chat.completions.create(
             model="deepseek-chat",
             messages=[
-                {"role": "system", "content": "Anda adalah penulis draft berita yang objektif dan datar. Output selalu JSON valid."},
+                {"role": "system", "content": "Anda adalah penulis draft berita yang objektif dan datar. Output JSON valid dengan field: judul, paragraf_1, paragraf_2, paragraf_3, subjudul, deskripsi."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.3
@@ -147,7 +162,6 @@ Alasan: {article.get('reason', '')}
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
-        # Cari pola JSON {...} di tengah teks
         match = re.search(r'\{.*\}', raw, re.DOTALL)
         if match:
             try:
@@ -166,6 +180,9 @@ Alasan: {article.get('reason', '')}
             "tags": "berita, teknologi, bisnis",
             "assets": [fetch_asset_image("technology")]
         }
+
+    # --- MAPPING FIELD (Indonesia → Inggris) ---
+    data = map_fields(data)
 
     # --- PASTIKAN SEMUA FIELD ADA ---
     if not data.get('assets'):

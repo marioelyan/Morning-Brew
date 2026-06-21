@@ -1,0 +1,33 @@
+name: Write with Style DNA
+
+on:
+  push:
+    paths:
+      - 'Artikel.txt'        # Jalan otomatis saat Artikel.txt di-commit
+  workflow_dispatch:         # Tetap bisa dijalankan manual
+
+jobs:
+  write-style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install openai
+
+      - name: Run write_with_style.py
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python write_with_style.py
+
+      - name: Upload artifact (opsional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: styled-articles
+          path: styled_articles.txt

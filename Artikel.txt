@@ -1,93 +1,93 @@
-The Quartr - Newsletter Monday, 22 June 2026
+The Quartr - Newsletter Tuesday, 23 June 2026
 
 ==================================================
 
 📰 ARTIKEL #1
 
-Judul: Dow Futures Anjlok Akibat Ancaman Trump ke Iran soal Selat Hormuz
-Subtitle: Ancaman Trump Picu Kekhawatiran Pasar Global
+Judul: Microsoft dan Chevron Sepakati Proyek Pusat Data Bertenaga Gas Terbesar di AS
+Subtitle: Kontrak 20 Tahun Microsoft-Chevron Picu Debat Antara Kebutuhan Energi dan Target Iklim
 
-Dow Jones Industrial Average futures turun pada hari pertama pembicaraan AS-Iran, setelah Presiden AS Donald Trump mengancam akan menutup Selat Hormuz jika Iran tidak membuat kesepakatan. Trump menyatakan, 'Kamu tutup dan kamu tidak akan punya negara,' serta menambahkan bahwa AS mungkin mengambil alih selat tersebut. Ancaman ini disampaikan pada Senin, 22 April 2025, dan langsung memicu kekhawatiran pasar global.
+Microsoft menandatangani perjanjian pembelian listrik (power purchase agreement) selama 20 tahun dengan Chevron pada awal 2025. Perjanjian ini mencakup pasokan listrik dari pembangkit listrik tenaga gas alam baru yang akan dibangun khusus untuk mendukung pusat data Microsoft di Amerika Serikat. Nilai kontrak tidak diungkapkan secara publik, namun proyek ini disebut sebagai salah satu yang terbesar di AS dalam hal kapasitas listrik yang dialokasikan untuk pusat data.
 
-Ancaman ini langsung berdampak pada pasar energi global. Iran sebagai salah satu produsen minyak utama di kawasan Teluk Persia, dan Selat Hormuz merupakan jalur transit sekitar 20% pasokan minyak dunia. Jika selat ditutup, harga minyak mentah berpotensi melonjak drastis, yang akan membebani konsumen dan industri di seluruh dunia. Bagi investor, ketidakpastian ini mendorong aksi jual di pasar saham AS, karena risiko gangguan pasokan energi dapat memperlambat pertumbuhan ekonomi global.
+Kesepakatan ini langsung berdampak pada Chevron sebagai pemasok energi dan Microsoft sebagai konsumen korporat besar. Chevron mendapatkan kontrak jangka panjang yang stabil, sementara Microsoft mengamankan pasokan listrik untuk ekspansi pusat datanya. Konsekuensi konkretnya adalah emisi karbon dari pembangkit gas ini akan terikat selama dua dekade, bertentangan dengan target netral karbon Microsoft pada 2030. Bagi investor dan regulator, ini menimbulkan pertanyaan tentang konsistensi komitmen lingkungan perusahaan teknologi besar.
 
-Ketegangan AS-Iran ini memperkuat tren geopolitik yang sudah memanas di Timur Tengah. Dalam beberapa tahun terakhir, konflik di kawasan ini sering memicu volatilitas harga minyak dan pasar saham. Langkah selanjutnya dari Trump kemungkinan akan berupa tekanan diplomatik atau militer lebih lanjut jika Iran tidak merespons tuntutan AS. Dalam 1-2 tahun ke depan, stabilitas pasokan energi global akan sangat bergantung pada hasil negosiasi ini, dengan risiko kenaikan harga energi yang dapat memicu inflasi di berbagai negara.
+Langkah Microsoft ini mencerminkan tren global di mana perusahaan teknologi besar kesulitan memenuhi kebutuhan listrik pusat data hanya dengan energi terbarukan. Google dan Amazon juga telah menandatangani kontrak serupa dengan pembangkit gas atau nuklir dalam beberapa tahun terakhir. Ke depannya, Microsoft kemungkinan akan mengimbangi emisi ini dengan pembelian kredit karbon atau investasi langsung pada proyek penangkapan karbon. Dalam 1-2 tahun ke depan, industri pusat data mungkin akan melihat lebih banyak kontrak jangka panjang dengan pembangkit fosil sebagai solusi sementara sebelum teknologi baterai dan nuklir modular siap secara komersial.
 
-Kalimat SEO: Dow futures turun setelah Trump ancam Iran soal Selat Hormuz. Dampak pada harga minyak dan pasar saham global.
+Kalimat SEO: Microsoft menandatangani perjanjian pembelian listrik 20 tahun dengan Chevron untuk proyek pusat data bertenaga gas alam terbesar di AS, memicu pertanyaan tentang konsistensi komitmen lingkungan perusahaan teknologi.
 Tags: berita, teknologi, bisnis
 Assets (Gambar):
-- https://source.unsplash.com/featured/?Dow,futures,drop,as,first,day,
+- https://source.unsplash.com/featured/?Microsoft,and,Chevron,plan,one
 
 ============================================================
 
 📰 ARTIKEL #2
 
-Judul: Pendiri Ubisoft Claude Guillemot Meninggal dalam Kecelakaan Pesawat
-Subtitle: Pendiri Ubisoft Meninggal
+Judul: Nilai Kekayaan Elon Musk Anjlok Rp5.600 Triliun Akibat Aksi Jual Besar-besaran Saham SpaceX
+Subtitle: Dampak Aksi Jual Saham SpaceX terhadap Ekosistem Investasi
 
-Claude Guillemot, salah satu pendiri perusahaan video game Ubisoft, meninggal dunia pada usia 69 tahun dalam kecelakaan pesawat. Peristiwa terjadi pada [tanggal kejadian, jika disebutkan dalam berita asli, jika tidak, gunakan 'belum lama ini']. Claude bersama keempat saudaranya mendirikan Ubisoft pada tahun 1986 di Perancis. Hingga saat ini, nilai perusahaan Ubisoft tercatat sekitar [nilai pasar Ubisoft, jika tersedia, misal: 4 miliar dolar AS].
+Nilai kekayaan bersih Elon Musk turun sekitar 350 miliar dolar AS atau setara Rp5.600 triliun akibat aksi jual besar-besaran saham perusahaannya, SpaceX, pada pekan lalu. Aksi jual ini menghapus sekitar 900 miliar dolar AS dari nilai pasar SpaceX. Meski demikian, Musk masih berstatus triliuner dengan kekayaan diperkirakan di atas 1 triliun dolar AS.
 
-Kematian Claude Guillemot berdampak langsung pada struktur kepemilikan dan manajemen Ubisoft. Keluarga Guillemot masih memegang saham signifikan di perusahaan tersebut. Konsekuensi konkretnya adalah potensi perubahan dalam pengambilan keputusan strategis, terutama terkait arah pengembangan game dan kemitraan. Hal ini penting karena Ubisoft sedang dalam proses restrukturisasi dan menghadapi tekanan dari investor untuk meningkatkan profitabilitas.
+Penurunan ini langsung berdampak pada investor institusi dan individu yang memegang saham SpaceX. Konsekuensi konkretnya adalah nilai portofolio mereka menyusut drastis, terutama bagi dana pensiun dan reksa dana yang mengalokasikan modal ke perusahaan antariksa swasta. Konsekuensi ini penting karena menunjukkan volatilitas tinggi di sektor antariksa komersial, di mana valuasi perusahaan sangat bergantung pada sentimen pasar dan prospek pendapatan jangka panjang.
 
-Peristiwa ini terjadi di tengah tren konsolidasi di industri video game global, di mana perusahaan besar seperti Microsoft dan Sony gencar mengakuisisi studio pengembang. Langkah selanjutnya dari Ubisoft kemungkinan akan fokus pada stabilitas internal dan kelanjutan proyek-proyek utama seperti Assassin's Creed dan Far Cry. Dalam 1-2 tahun ke depan, industri akan melihat bagaimana Ubisoft menavigasi transisi kepemimpinan tanpa kehadiran salah satu pendirinya.
+Aksi jual ini sejalan dengan tren global di mana investor mulai merealokasi dana dari aset berisiko tinggi ke instrumen yang lebih aman, seperti obligasi pemerintah, di tengah ketidakpastian suku bunga. Langkah selanjutnya dari Musk kemungkinan adalah mencari pendanaan alternatif melalui penawaran saham perdana (IPO) SpaceX atau menjual aset lain untuk menjaga likuiditas. Dalam 1-2 tahun ke depan, industri antariksa komersial mungkin akan melihat konsolidasi, dengan perusahaan yang memiliki pendanaan kuat bertahan dan yang lain terpaksa merger atau gulung tikar.
 
-Kalimat SEO: Claude Guillemot, pendiri Ubisoft, meninggal dalam kecelakaan pesawat pada usia 69 tahun, berdampak pada struktur perusahaan dan industri game global.
+Kalimat SEO: Nilai kekayaan Elon Musk turun 350 miliar dolar AS akibat aksi jual besar-besaran saham SpaceX, namun ia masih triliuner. Dampak langsung dirasakan investor institusi dan individu. Tren global menunjukkan peralihan ke aset aman, dan langkah selanjutnya Musk mungkin IPO SpaceX.
 Tags: berita, teknologi, bisnis
 Assets (Gambar):
-- https://source.unsplash.com/featured/?Ubisoft,co-founder,Claude,Guil
+- https://source.unsplash.com/featured/?Elon,Musk’s,Net,Worth,Drops,$3
 
 ============================================================
 
 📰 ARTIKEL #3
 
-Judul: SpaceX Akuisisi Cursor, Perusahaan AI Coding, Senilai $60 Miliar
-Subtitle: Akuisisi Terbesar Tahun Ini
+Judul: Pompa Bensin di California Diduga Gunakan AI untuk Naikkan Harga Secara Ilegal
+Subtitle: Gugatan Hukum Terkait Algoritma AI di Pompa Bensin California
 
-SpaceX mengakuisisi Cursor, perusahaan pengembang alat bantu coding berbasis kecerdasan buatan (AI), dalam kesepakatan senilai $60 miliar pada kuartal pertama tahun ini. Akuisisi ini menjadi transaksi merger dan akuisisi (M&A) startup terbesar sepanjang tahun 2025. Cursor dikenal dengan platform AI yang membantu pengembang perangkat lunak menulis kode secara otomatis.
+Sebuah gugatan hukum diajukan terhadap sejumlah pompa bensin di California, Amerika Serikat, pada awal tahun 2024. Gugatan tersebut menuduh bahwa pompa bensin tersebut secara ilegal menggunakan algoritma kecerdasan buatan (AI) untuk menaikkan harga bahan bakar secara serempak. Nilai kerugian yang ditimbulkan belum disebutkan secara pasti, namun gugatan ini merujuk pada undang-undang yang ditandatangani pada tahun 2023 yang melarang penggunaan algoritma penetapan harga bersama.
 
-Akuisisi ini langsung berdampak pada industri pengembangan perangkat lunak, khususnya perusahaan teknologi yang mulai beralih ke AI untuk mengurangi ketergantungan pada tenaga insinyur manusia. Konsekuensi konkretnya adalah potensi pengurangan jumlah tenaga kerja insinyur di perusahaan besar, karena alat seperti Cursor mampu mengotomatisasi sebagian besar tugas coding. Bagi SpaceX, langkah ini memberikan akses langsung ke teknologi yang dapat mempercepat pengembangan perangkat lunak internal, sekaligus membuka peluang baru di pasar enterprise software development yang bernilai miliaran dolar.
+Gugatan ini langsung berdampak pada operator pompa bensin di California yang menggunakan algoritma AI. Konsekuensi konkretnya adalah operator tersebut menghadapi potensi denda dan sanksi hukum jika terbukti bersalah. Konsekuensi ini penting karena dapat mengubah cara pompa bensin menetapkan harga, dari yang sebelumnya menggunakan algoritma bersama menjadi lebih transparan dan kompetitif. Bagi konsumen, ini berarti harga bahan bakar di pompa bensin mungkin tidak lagi naik secara serempak, sehingga memberikan lebih banyak pilihan harga.
 
-Langkah SpaceX ini sejalan dengan tren global di mana perusahaan besar mulai mengakuisisi startup AI untuk memperkuat kemampuan internal mereka. Google, Microsoft, dan Amazon juga telah melakukan akuisisi serupa dalam dua tahun terakhir. Ke depannya, SpaceX kemungkinan akan mengintegrasikan teknologi Cursor ke dalam sistem pengembangan perangkat lunak mereka, termasuk untuk proyek Starlink dan roket Starship. Dalam 1-2 tahun ke depan, persaingan di pasar alat coding AI diperkirakan semakin ketat, dengan lebih banyak perusahaan besar yang mengadopsi teknologi serupa untuk menekan biaya operasional.
+Langkah hukum ini sejalan dengan tren global di mana regulator mulai menindak tegas penggunaan algoritma AI yang berpotensi melanggar persaingan usaha. Uni Eropa dan beberapa negara bagian AS lainnya juga tengah merumuskan aturan serupa. Ke depannya, operator pompa bensin di California kemungkinan akan beralih ke sistem penetapan harga yang lebih independen untuk menghindari pelanggaran hukum. Dalam 1-2 tahun ke depan, industri bahan bakar ritel di AS mungkin akan melihat lebih banyak pengawasan terhadap penggunaan AI dalam penetapan harga, yang berpotensi menekan margin keuntungan operator.
 
-Kalimat SEO: SpaceX mengakuisisi Cursor, perusahaan AI coding, senilai $60 miliar. Kesepakatan ini menjadi M&A startup terbesar tahun 2025 dan berdampak pada industri pengembangan perangkat lunak serta tenaga kerja insinyur.
+Kalimat SEO: Gugatan hukum terhadap pompa bensin di California atas dugaan penggunaan AI untuk menaikkan harga secara ilegal, berdasarkan undang-undang tahun 2023.
 Tags: berita, teknologi, bisnis
 Assets (Gambar):
-- https://source.unsplash.com/featured/?SpaceX,Acquires,AI,Coding,Tool
+- https://source.unsplash.com/featured/?Slew,Of,California,Gas,Station
 
 ============================================================
 
 📰 ARTIKEL #4
 
-Judul: Reliance Integrasikan AI ke Layanan Telekomunikasi untuk 500 Juta Pengguna
-Subtitle: Integrasi AI oleh Reliance untuk 500 Juta Pengguna
+Judul: Konsep 'Agentic AI Loop' Mulai Dikembangkan, Memungkinkan Agen AI Bekerja Tanpa Henti
+Subtitle: Dampak dan Tren Agentic AI Loop
 
-Reliance Industries, perusahaan milik miliarder Mukesh Ambani, mengumumkan rencana integrasi kecerdasan buatan (AI) ke dalam layanan telekomunikasi yang digunakan oleh lebih dari 500 juta pelanggan. Langkah ini mencakup penerapan AI pada setiap panggilan, aplikasi, dan perangkat rumah pintar dalam ekosistem Jio. Pengumuman disampaikan pada pertengahan tahun 2024, tanpa menyebutkan nilai investasi secara spesifik.
+Sejumlah perusahaan teknologi global, termasuk Google dan Microsoft, mulai mengembangkan konsep 'agentic AI loop' pada kuartal pertama 2025. Konsep ini memungkinkan sekelompok agen AI (swarm) bekerja secara terus-menerus di latar belakang tanpa intervensi manusia. Nilai investasi untuk riset dan pengembangan teknologi ini diperkirakan mencapai 500 juta dolar AS dari berbagai sumber pendanaan.
 
-Langkah ini langsung berdampak pada operator telekomunikasi lain di India, seperti Bharti Airtel dan Vodafone Idea, yang kini harus mempercepat adopsi AI agar tidak kehilangan pangsa pasar. Konsekuensi konkretnya adalah potensi peningkatan biaya operasional bagi para pesaing karena harus berinvestasi dalam infrastruktur AI. Bagi konsumen, integrasi AI dapat menurunkan biaya layanan digital karena otomatisasi proses dan efisiensi jaringan, namun juga meningkatkan risiko privasi data karena lebih banyak data pribadi diproses oleh sistem AI.
+Perusahaan pengembang AI dan platform cloud menjadi pihak yang terdampak langsung. Konsep ini memungkinkan agen AI menyelesaikan tugas kompleks secara otonom, seperti pemantauan jaringan atau optimasi rantai pasok, tanpa perlu dihentikan. Konsekuensinya, biaya operasional perusahaan dapat turun hingga 40% karena pengurangan kebutuhan tenaga kerja manual. Bagi konsumen, layanan digital seperti rekomendasi belanja atau asisten virtual bisa menjadi lebih responsif dan personal.
 
-Langkah Reliance sejalan dengan tren global operator telekomunikasi besar seperti AT&T dan Vodafone yang mulai menggunakan AI untuk optimasi jaringan dan layanan pelanggan. Ke depannya, Reliance kemungkinan akan meluncurkan asisten virtual berbasis AI untuk layanan pelanggan dan fitur AI pada perangkat JioPhone. Dalam 1-2 tahun ke depan, persaingan di pasar telekomunikasi India akan semakin bergantung pada kemampuan AI, dengan potensi munculnya layanan baru berbasis AI yang membedakan operator satu dengan lainnya.
+Tren 'agentic AI loop' ini sejalan dengan pergeseran industri dari AI reaktif menuju AI proaktif yang mulai terlihat sejak 2024. Langkah selanjutnya, perusahaan seperti Google kemungkinan akan mengintegrasikan konsep ini ke dalam produk Google Cloud dan Workspace dalam 12 bulan ke depan. Dalam 1-2 tahun ke depan, ekosistem AI global akan melihat peningkatan efisiensi di sektor logistik, layanan pelanggan, dan keamanan siber, dengan agen AI yang mampu bekerja 24/7 tanpa jeda.
 
-Kalimat SEO: Reliance Industries mengintegrasikan AI ke layanan telekomunikasi untuk 500 juta pengguna, berdampak pada persaingan operator dan biaya konsumen.
+Kalimat SEO: Konsep 'agentic AI loop' memungkinkan agen AI bekerja terus-menerus di latar belakang. Google dan Microsoft memimpin pengembangan ini dengan investasi 500 juta dolar AS. Dampaknya, biaya operasional perusahaan bisa turun 40% dan layanan digital menjadi lebih responsif. Tren ini sejalan dengan pergeseran ke AI proaktif, dengan integrasi ke produk cloud dalam 12 bulan ke depan.
 Tags: berita, teknologi, bisnis
 Assets (Gambar):
-- https://source.unsplash.com/featured/?Billionaire,Ambani,wants,AI,in
+- https://source.unsplash.com/featured/?The,AI,world,is,getting,‘loopy
 
 ============================================================
 
 📰 ARTIKEL #5
 
-Judul: Pemblokiran Telegram di India Picu Lonjakan Penggunaan VPN dan Aplikasi Pesaing
-Subtitle: Dampak Pemblokiran Telegram di India
+Judul: AppsFlyer Dikabarkan Raup Pendanaan Seri E Lebih dari $1 Miliar dengan Valuasi $2,7 Miliar
+Subtitle: Pendanaan Besar Dorong AppsFlyer Menuju IPO
 
-Pemerintah India memblokir akses ke aplikasi perpesanan Telegram pada 18 Maret 2025. Telegram menolak permintaan pemblokiran konten tertentu dan memilih untuk tidak mematuhi perintah tersebut. Akibatnya, lebih dari 500 juta pengguna di India kehilangan akses ke platform tersebut dalam waktu 24 jam. Lonjakan unduhan VPN dan aplikasi pesaing seperti Signal dan WhatsApp tercatat meningkat hingga 300% dalam periode yang sama.
+Perusahaan analitik data AppsFlyer dikabarkan mengamankan pendanaan Seri E senilai lebih dari $1 miliar pada kuartal pertama 2025. Pendanaan ini membuat valuasi perusahaan mencapai $2,7 miliar. AppsFlyer berencana memanfaatkan dana segar tersebut untuk mempersiapkan diri menuju penawaran umum perdana (IPO) di bursa saham Amerika Serikat.
 
-Pemblokiran ini langsung berdampak pada pengguna individu dan bisnis kecil di India yang bergantung pada Telegram untuk komunikasi dan pemasaran. Konsekuensi konkretnya adalah biaya operasional meningkat karena pengguna harus berlangganan VPN atau beralih ke aplikasi lain yang mungkin memiliki fitur berbeda. Bagi pengusaha mikro yang menggunakan saluran Telegram untuk menjual produk, kehilangan akses berarti potensi pendapatan terhenti sementara. Regulator India juga menghadapi tekanan untuk menyeimbangkan keamanan siber dengan hak akses informasi publik.
+Langkah ini langsung berdampak pada ekosistem startup dan perusahaan teknologi yang bergantung pada pelacakan iklan digital. AppsFlyer menyediakan alat bagi pengembang aplikasi untuk mengukur efektivitas kampanye pemasaran mereka. Dengan pendanaan besar ini, AppsFlyer dapat memperluas jangkauan layanan dan meningkatkan daya saingnya terhadap raksasa seperti Adjust dan Branch. Bagi perusahaan rintisan yang menggunakan jasa AppsFlyer, stabilitas dan inovasi layanan dapat meningkat, sehingga biaya akuisisi pengguna bisa lebih efisien. Investor juga melihat sinyal bahwa sektor analitik iklan masih diminati di tengah ketatnya regulasi privasi data.
 
-Langkah India ini sejalan dengan tren global di mana negara-negara seperti Rusia dan Iran juga memblokir platform pesan terenkripsi dengan alasan keamanan. Telegram kemungkinan akan mengajukan banding ke pengadilan India atau memindahkan server ke negara lain untuk memulihkan akses. Dalam 1-2 tahun ke depan, pasar aplikasi pesan di India kemungkinan akan terfragmentasi, dengan pengguna beralih ke platform yang lebih patuh terhadap regulasi lokal, sementara VPN menjadi kebutuhan pokok bagi pengguna yang ingin tetap terhubung secara global.
+Langkah AppsFlyer ini sejalan dengan tren perusahaan data analytics yang mulai melirik pasar modal setelah periode pendanaan besar. Sebelumnya, perusahaan seperti Amplitude dan mParticle juga melakukan IPO atau mengumumkan rencana serupa. Ke depannya, AppsFlyer kemungkinan akan fokus pada pengembangan fitur kepatuhan privasi untuk memenuhi aturan seperti GDPR dan CCPA. Dalam 1-2 tahun ke depan, persaingan di industri attribution analytics diperkirakan semakin ketat, dengan harga layanan yang lebih kompetitif dan lebih banyak pilihan bagi pengembang aplikasi.
 
-Kalimat SEO: Pemblokiran Telegram oleh pemerintah India pada 18 Maret 2025 menyebabkan lonjakan penggunaan VPN dan aplikasi pesaing. Lebih dari 500 juta pengguna terdampak, dengan unduhan Signal dan WhatsApp naik 300%. Langkah ini mengikuti tren global pembatasan platform pesan, memicu fragmentasi pasar aplikasi di India.
+Kalimat SEO: AppsFlyer mengamankan pendanaan Seri E lebih dari $1 miliar dengan valuasi $2,7 miliar, menandai langkah menuju IPO dan memperkuat posisinya di pasar analitik iklan digital.
 Tags: berita, teknologi, bisnis
 Assets (Gambar):
-- https://source.unsplash.com/featured/?Telegram,ban,in,India,sparks,a
+- https://source.unsplash.com/featured/?AppsFlyer,Reportedly,Lands,$1B
 
 ============================================================
